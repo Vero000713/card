@@ -1,0 +1,177 @@
+:root {
+  --pink-bg-1: #ffe3ec;
+  --pink-bg-2: #ffd1de;
+  --pink-bg-3: #fff6f9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'PingFang SC', 'Microsoft YaHei', 'Segoe UI', sans-serif;
+  background: linear-gradient(160deg, var(--pink-bg-1) 0%, var(--pink-bg-2) 45%, var(--pink-bg-3) 100%);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* 漂浮的小爪印装饰 */
+.paw-float {
+  position: fixed;
+  opacity: 0.35;
+  pointer-events: none;
+  user-select: none;
+  animation: floaty 6s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-8deg);
+  }
+  50% {
+    transform: translateY(-14px) rotate(8deg);
+  }
+}
+
+/* 页面整体布局 */
+.page {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  gap: 20px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #d4547a;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 0 #fff, 0 4px 12px rgba(212, 84, 122, 0.25);
+  margin: 0;
+  text-align: center;
+}
+
+.page-subtitle {
+  color: #b96b84;
+  margin: 0;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+/* 卡片四周的宠物头像 */
+.pets-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pet-img {
+  width: 92px;
+  height: 92px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 8px 20px rgba(212, 84, 122, 0.25);
+  background: #fff0f5;
+  animation: bounce 3.2s ease-in-out infinite;
+  transition: transform 0.3s;
+}
+
+.pet-img:hover {
+  transform: scale(1.12) rotate(-6deg);
+}
+
+.pet-img:nth-child(even) {
+  animation-delay: 1.1s;
+}
+
+.pet-img.small {
+  width: 72px;
+  height: 72px;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* 卡片主体 */
+.cheer-card {
+  width: min(560px, 94vw);
+  text-align: center;
+  border-radius: 28px !important;
+  border: 3px dashed #ffb6c9 !important;
+  box-shadow: 0 16px 40px rgba(212, 84, 122, 0.2) !important;
+  position: relative;
+}
+
+.cheer-card .ant-card-body {
+  padding: 32px 28px;
+}
+
+.cheer-quote {
+  font-size: 20px;
+  line-height: 1.9;
+  color: #7a4457;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 8px;
+}
+
+.cheer-quote.fade {
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.cheer-index {
+  color: #d48aa0;
+  font-size: 13px;
+  letter-spacing: 2px;
+  margin-bottom: 18px;
+}
+
+.card-top-pet {
+  position: absolute;
+  top: -46px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  box-shadow: 0 6px 16px rgba(212, 84, 122, 0.3);
+  object-fit: cover;
+  background: #fff0f5;
+}
+
+.footer-tip {
+  color: #c98aa0;
+  font-size: 13px;
+  margin-top: 8px;
+}

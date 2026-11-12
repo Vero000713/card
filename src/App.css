@@ -1,0 +1,5 @@
+/* App 专属样式（主要样式在 index.css 中） */
+
+.cheer-card {
+  background: linear-gradient(180deg, #fffafc 0%, #fff0f5 100%) !important;
+}
