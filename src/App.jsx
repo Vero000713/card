@@ -70,10 +70,10 @@ async function fetchCheerFromDeepSeek(lastPromptIndex) {
 // 使用 BASE_URL 以兼容 GitHub Pages 等子路径部署
 const BASE = import.meta.env.BASE_URL
 const PET_IMGS = [
-  `${BASE}pets/cheer-cat.png`,
-  `${BASE}pets/study-pup.png`,
-  `${BASE}pets/nap-cat.png`,
-  `${BASE}pets/duo.png`,
+  `${BASE}pets/cheer-cat.jpg`,
+  `${BASE}pets/study-pup.jpg`,
+  `${BASE}pets/nap-cat.jpg`,
+  `${BASE}pets/duo.jpg`,
 ]
 
 const PAWS = ['🐾', '🐾', '🐾', '🐾', '🐾', '🐾']
