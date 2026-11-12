@@ -8,7 +8,8 @@ const API_URL = 'https://api.deepseek.com/chat/completions'
 const API_KEY = import.meta.env.VITE_DEEPSEEK_API_KEY
 
 // 多套随机 prompt：每次许愿随机挑一种风格（简短、点到为止）
-const COMMON_RULES = `要求：30~60字，直接输出句子本身，不要引号、解释或前缀；最多2个emoji；称呼在"欣懿宝宝"和"宝宝"里随机选一个；核心是笃定、开心地传达"她一定会拿到好offer"；约一半概率自然提一句"拿到offer后我们一起去台湾旅行"，另一半不提；严禁出现简历、面试、笔试、海投、挂、被拒、焦虑、压力等词，不要提找工作的任何环节。`
+// 台湾旅行由代码控制约 1/3 概率出现，避免每句都是同一结尾
+const COMMON_RULES = `要求：长度随机，可以短到10~20字，也可以是30~60字，句式灵活多样；直接输出句子本身，不要引号、解释或前缀；最多2个emoji；称呼在"欣懿宝宝"和"宝宝"里随机选一个；核心是笃定、开心地传达"她一定会拿到好offer"；严禁出现简历、面试、笔试、海投、挂、被拒、焦虑、压力等词，不要提找工作的任何环节。`
 
 const PROMPTS = [
   // 幽默风趣
@@ -35,6 +36,12 @@ async function fetchCheerFromDeepSeek(lastPromptIndex, lastQuote) {
       promptIndex = Math.floor(Math.random() * PROMPTS.length)
     }
   }
+  // 约 1/3 概率提到台湾旅行，其余不提
+  const mentionTaiwan = Math.random() < 0.33
+  const taiwanRule = mentionTaiwan
+    ? `这次可以自然地提一句拿到offer后一起去台湾旅行，位置随意，别放在结尾当口号。`
+    : `这次完全不要提到台湾旅行。`
+
   const res = await fetch(API_URL, {
     method: 'POST',
     headers: {
@@ -44,7 +51,7 @@ async function fetchCheerFromDeepSeek(lastPromptIndex, lastQuote) {
     body: JSON.stringify({
       model: 'deepseek-chat',
       messages: [
-        { role: 'system', content: PROMPTS[promptIndex] },
+        { role: 'system', content: `${PROMPTS[promptIndex]}\n${taiwanRule}` },
         { role: 'user', content: `来一句新的加油吧，用词、比喻和句式都不要和上一句雷同。上一句是：「${lastQuote}」（随机数 ${Date.now()}）` },
       ],
       temperature: 1.3,
