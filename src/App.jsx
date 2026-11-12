@@ -27,7 +27,7 @@ const PROMPTS = [
 
 const WELCOME_TEXT = '点一下下方的水晶球 🔮，让小猫小狗为你向宇宙许个愿吧～'
 
-async function fetchCheerFromDeepSeek(lastPromptIndex) {
+async function fetchCheerFromDeepSeek(lastPromptIndex, lastQuote) {
   // 随机挑一种风格，且尽量不与上一次重复
   let promptIndex = Math.floor(Math.random() * PROMPTS.length)
   if (PROMPTS.length > 1) {
@@ -45,7 +45,7 @@ async function fetchCheerFromDeepSeek(lastPromptIndex) {
       model: 'deepseek-chat',
       messages: [
         { role: 'system', content: PROMPTS[promptIndex] },
-        { role: 'user', content: `来一句新的加油吧（随机数 ${Date.now()}），要和之前的不一样哦！` },
+        { role: 'user', content: `来一句新的加油吧，用词、比喻和句式都不要和上一句雷同。上一句是：「${lastQuote}」（随机数 ${Date.now()}）` },
       ],
       temperature: 1.3,
       max_tokens: 200,
@@ -96,7 +96,7 @@ export default function App() {
     }
     setLoading(true)
     try {
-      const { text, promptIndex } = await fetchCheerFromDeepSeek(lastPromptIndex)
+      const { text, promptIndex } = await fetchCheerFromDeepSeek(lastPromptIndex, quote)
       setLastPromptIndex(promptIndex)
       setQuote(text)
       setQuoteKey((k) => k + 1)
